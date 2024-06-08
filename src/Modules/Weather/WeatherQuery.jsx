@@ -9,16 +9,16 @@ export const weatherApi = createApi({
   endpoints: (builder) => ({
     getWeatherByLocation: builder.query({
       query: (location) => {
-        return `https://api.openweathermap.org/data/2.5/weather?lat=${
-          location.lat || 28.6517178
-        }&lon=${location.lon || 77.2219388}&appid=${apiKey}`;
+        return `/weather?lat=${location.lat || 28.6517178}&lon=${
+          location.lon || 77.2219388
+        }&appid=${apiKey}`;
       },
     }),
     getTodayForecast: builder.query({
       query: (location) => {
-        return `https://api.openweathermap.org/data/2.5/forecast?lat=${
-          location.lat || 28.6517178
-        }&lon=${location.lon || 77.2219388}&appid=${apiKey}`;
+        return `/forecast?lat=${location.lat || 28.6517178}&lon=${
+          location.lon || 77.2219388
+        }&appid=${apiKey}`;
       },
       transformResponse: (res) => {
         const today = new Date();

@@ -30,7 +30,7 @@ const Search = ({ setLoc }) => {
   };
 
   return (
-    <Grid>
+    <Grid sx={{ mb: "2rem" }}>
       <TextField
         placeholder="Search City or State"
         value={search}
@@ -41,11 +41,15 @@ const Search = ({ setLoc }) => {
             background: "#212A3B",
             height: "100%",
             padding: "4px",
-          }, // Set the font color to red
+          },
         }}
         variant="standard"
       />
-      <Button sx={{ ml: "1rem" }} variant="contained" onClick={getLocation}>
+      <Button
+        sx={{ ml: "1rem", height: "100%" }}
+        variant="contained"
+        onClick={getLocation}
+      >
         Search
       </Button>
     </Grid>
