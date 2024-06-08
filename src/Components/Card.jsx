@@ -9,6 +9,7 @@ const Card = (props) => {
         bgcolor: props?.sx?.bgcolor ? props.sx.bgcolor : "#0B131E",
         color: "#FFF",
         padding: "1rem",
+        borderRadius: "16px",
       }}
       elevation={4}
     >

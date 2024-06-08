@@ -2,26 +2,28 @@ import { Grid, Typography } from "@mui/material";
 import React from "react";
 import Card from "../../Components/Card";
 
-const AirConditions = () => {
+const AirConditions = ({ data, isLoading, isFetching }) => {
   return (
     <Card sx={{ bgcolor: "#212A3B" }}>
       <Grid container>
-        <Grid xs={12}>Air conditions</Grid>
-        <Grid xs={6}>
+        <Grid xs={12} sx={{ mb: "1rem" }}>
+          Air conditions
+        </Grid>
+        <Grid xs={6} sx={{ mb: "1rem" }}>
           <Grid> Real Feel </Grid>
-          <Typography>30 *</Typography>
+          <Typography>{data?.main?.feels_like} </Typography>
         </Grid>
         <Grid xs={6}>
           <Grid> Wind </Grid>
-          <Typography>30 *</Typography>
+          <Typography>{data?.wind?.speed} km/h</Typography>
         </Grid>
         <Grid xs={6}>
-          <Grid> Chance of rain</Grid>
-          <Typography>30 *</Typography>
+          <Grid> Gust</Grid>
+          <Typography>{data?.wind?.gust}</Typography>
         </Grid>
         <Grid xs={6}>
-          <Grid>UV Index </Grid>
-          <Typography>30 *</Typography>
+          <Grid>Pressure </Grid>
+          <Typography>{data?.main?.pressure}</Typography>
         </Grid>
       </Grid>
     </Card>

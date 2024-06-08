@@ -1,18 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useDeferredValue } from "react";
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
+import { apiKey } from "../Modules/Weather/WeatherQuery";
 
-const Search = () => {
-  const [location, setLocation] = useState("");
+const Search = ({ setLoc }) => {
+  const [search, setSearch] = useState("");
+  // const deferredSearch = useDeferredValue(search);
+
+  const getLocation = async () => {
+    if (!search.trim()) {
+      return alert("Search Cannot be empty");
+    }
+    const loc = await fetch(
+      `http://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=1&appid=${apiKey}`
+    );
+
+    const res = await loc.json();
+
+    if (res.length)
+      setLoc({
+        lat: res?.[0].lat,
+        lon: res?.[0].lon,
+        cnt: res?.[0].country,
+        name: res?.[0].name,
+      });
+    else {
+      return alert("No Result found");
+    }
+  };
+
   return (
-    <>
+    <Grid>
       <TextField
         placeholder="Search City or State"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        InputProps={{
+          style: {
+            color: "white",
+            background: "#212A3B",
+            height: "100%",
+            padding: "4px",
+          }, // Set the font color to red
+        }}
+        variant="standard"
       />
-      <Button variant="contained"> Search</Button>
-    </>
+      <Button sx={{ ml: "1rem" }} variant="contained" onClick={getLocation}>
+        Search
+      </Button>
+    </Grid>
   );
 };
 
