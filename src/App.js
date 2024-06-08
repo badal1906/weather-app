@@ -1,22 +1,21 @@
-import React from "react";
-import Search from "./Components/Search";
-import Card from "./Components/Card";
-import Forecast from "./Modules/Weather/Forecast";
-import AirConditions from "./Modules/Weather/AirConditions";
-import WeatherHome from "./Modules/Weather/WeatherHome";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import EcommerRoutes from "./Modules/Ecommerce/EcommerRoutes";
 import { Grid } from "@mui/material";
+
+const Weather = lazy(() => import("./Modules/Weather/WeatherHome"));
+const Ecom = lazy(() => import("./Modules/Ecommerce/EcommerRoutes"));
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="weather" element={<WeatherHome />} />
-        <Route path="/ecommerce*" element={<EcommerRoutes />} />
-      </Routes>
-    </BrowserRouter>
+    <Suspense fallback={"Loading"}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="weather" element={<Weather />} />
+          <Route path="/ecommerce*" element={<Ecom />} />
+        </Routes>
+      </BrowserRouter>
+    </Suspense>
   );
 };
 

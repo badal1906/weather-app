@@ -1,20 +1,19 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import Signin from "./Auth/Signin";
-import Home from "./Home/Home";
-import { useSelector } from "react-redux";
+
+const Auth = lazy(() => import("./Auth/Signin"));
+const Home = lazy(() => import("./Home/Home"));
 
 const EcommerRoutes = () => {
-  const user = useSelector((s) => s.user.user);
   return (
     <Routes>
       <Route
         path="/signup"
-        element={<Signin title="Sign Up" buttonText="Sign Up" type="signup" />}
+        element={<Auth title="Sign Up" buttonText="Sign Up" type="signup" />}
       />{" "}
       <Route
         path="/login"
-        element={<Signin title="Log In" buttonText="Login" type="login" />}
+        element={<Auth title="Log In" buttonText="Login" type="login" />}
       />
       <Route path="/home" element={<Home />} />
     </Routes>
