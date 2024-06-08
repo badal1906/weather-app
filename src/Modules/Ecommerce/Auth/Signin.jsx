@@ -3,14 +3,19 @@ import { Button, Grid, Typography } from "@mui/material";
 import Card from "../../../Components/Card";
 import CommonInput from "../../../Components/CommonInput";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../../Redux/UserSlice";
 
 const AuthForm = ({ title, buttonText, type }) => {
+  const user = useSelector((s) => s.user.user);
+
   const navigate = useNavigate();
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
@@ -24,12 +29,9 @@ const AuthForm = ({ title, buttonText, type }) => {
       return;
     }
     if (type === "login") {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        const user = JSON.parse(storedUser);
-
+      if (user) {
         if (user.email === values.email && user.password === values.password) {
-          console.log("Sign in successful");
+          dispatch(setUser(user));
           navigate("/ecommerce/home");
         } else {
           return alert("Invalid Email or Password");
@@ -38,7 +40,7 @@ const AuthForm = ({ title, buttonText, type }) => {
         return alert("User not found");
       }
     } else {
-      localStorage.setItem("user", JSON.stringify(values));
+      dispatch(setUser(values));
       navigate("/ecommerce/login");
     }
   };
@@ -67,7 +69,7 @@ const AuthForm = ({ title, buttonText, type }) => {
               <CommonInput
                 required
                 placeholder="Enter Email"
-                error={error}
+                error={!!error}
                 helperText={error}
                 name="email"
                 label="Email"

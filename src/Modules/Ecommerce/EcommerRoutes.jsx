@@ -2,8 +2,10 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Signin from "./Auth/Signin";
 import Home from "./Home/Home";
+import { useSelector } from "react-redux";
 
 const EcommerRoutes = () => {
+  const user = useSelector((s) => s.user.user);
   return (
     <Routes>
       <Route
